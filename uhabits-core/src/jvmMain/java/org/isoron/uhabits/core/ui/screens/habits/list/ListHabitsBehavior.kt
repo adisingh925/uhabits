@@ -21,6 +21,8 @@ package org.isoron.uhabits.core.ui.screens.habits.list
 import org.isoron.uhabits.core.commands.CommandRunner
 import org.isoron.uhabits.core.commands.CreateRepetitionCommand
 import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_1
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_2
 import org.isoron.uhabits.core.models.Habit
 import org.isoron.uhabits.core.models.HabitList
 import org.isoron.uhabits.core.models.HabitType
@@ -73,7 +75,9 @@ open class ListHabitsBehavior @Inject constructor(
                 entry.notes,
                 habit.color
             ) { newValue: Int, newNotes: String, x: Float, y: Float ->
-                if (newValue != entry.value && newValue == YES_MANUAL) screen.showConfetti(habit.color, x, y)
+                if (newValue != entry.value && newValue == YES_MANUAL) screen.showConfetti(PaletteColor(0), x, y)
+                if (newValue != entry.value && newValue == YES_MANUAL_1) screen.showConfetti(PaletteColor(1), x, y)
+                if (newValue != entry.value && newValue == YES_MANUAL_2) screen.showConfetti(PaletteColor(2), x, y)
                 commandRunner.run(CreateRepetitionCommand(habitList, habit, timestamp, newValue, newNotes))
             }
         }
@@ -133,7 +137,9 @@ open class ListHabitsBehavior @Inject constructor(
         commandRunner.run(
             CreateRepetitionCommand(habitList, habit, timestamp, value, notes)
         )
-        if (value == YES_MANUAL) screen.showConfetti(habit.color, x, y)
+        if (value == YES_MANUAL) screen.showConfetti(PaletteColor(0), x, y)
+        if (value == YES_MANUAL_1) screen.showConfetti(PaletteColor(1), x, y)
+        if (value == YES_MANUAL_2) screen.showConfetti(PaletteColor(2), x, y)
     }
 
     enum class Message {

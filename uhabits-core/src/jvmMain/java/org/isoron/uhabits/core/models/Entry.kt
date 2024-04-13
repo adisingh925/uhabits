@@ -20,7 +20,7 @@ package org.isoron.uhabits.core.models
 
 data class Entry(
     val timestamp: Timestamp,
-    val value: Int,
+    var value: Int,
     val notes: String = ""
 ) {
     companion object {
@@ -33,6 +33,16 @@ data class Entry(
          * Value indicating that the user has performed the habit at this timestamp.
          */
         const val YES_MANUAL = 2
+
+        /**
+         * Value indicating that the user has performed the habit at this timestamp.
+         */
+        const val YES_MANUAL_1 = 4
+
+        /**
+         * Value indicating that the user has performed the habit at this timestamp.
+         */
+        const val YES_MANUAL_2 = 5
 
         /**
          * Value indicating that the user did not perform the habit, but they were not
@@ -57,6 +67,8 @@ data class Entry(
             areQuestionMarksEnabled: Boolean
         ): Int {
             return when (value) {
+                YES_MANUAL_1 -> YES_MANUAL_1
+                YES_MANUAL_2 -> YES_MANUAL_2
                 YES_AUTO -> YES_MANUAL
                 YES_MANUAL -> if (isSkipEnabled) SKIP else NO
                 SKIP -> NO

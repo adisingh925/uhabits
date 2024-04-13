@@ -30,6 +30,7 @@ import org.isoron.uhabits.activities.AndroidThemeSwitcher
 import org.isoron.uhabits.core.commands.Command
 import org.isoron.uhabits.core.commands.CommandRunner
 import org.isoron.uhabits.core.models.Habit
+import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.preferences.Preferences
 import org.isoron.uhabits.core.ui.screens.habits.show.views.HistoryCardPresenter
 import org.isoron.uhabits.core.ui.views.HistoryChart
@@ -62,7 +63,7 @@ class HistoryEditorDialog : AppCompatDialogFragment(), CommandRunner.Listener {
         chart = HistoryChart(
             dateFormatter = JavaLocalDateFormatter(Locale.getDefault()),
             firstWeekday = preferences.firstWeekday,
-            paletteColor = habit.color,
+            paletteColor = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
             series = emptyList(),
             defaultSquare = HistoryChart.Square.OFF,
             notesIndicators = emptyList(),

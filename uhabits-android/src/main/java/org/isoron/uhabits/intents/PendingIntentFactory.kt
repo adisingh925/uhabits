@@ -29,6 +29,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.util.Log
+import androidx.core.content.ContextCompat
 import org.isoron.uhabits.activities.habits.list.ListHabitsActivity
 import org.isoron.uhabits.activities.habits.show.ShowHabitActivity
 import org.isoron.uhabits.core.AppScope
@@ -37,6 +39,7 @@ import org.isoron.uhabits.core.models.Timestamp
 import org.isoron.uhabits.inject.AppContext
 import org.isoron.uhabits.receivers.ReminderReceiver
 import org.isoron.uhabits.receivers.WidgetReceiver
+import org.isoron.uhabits.widgets.activities.HabitPickerDialog
 import javax.inject.Inject
 
 @AppScope
@@ -134,8 +137,8 @@ class PendingIntentFactory
             FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT
         )
 
-    fun toggleCheckmark(habit: Habit, timestamp: Long?): PendingIntent =
-        getBroadcast(
+    fun toggleCheckmark(habit: Habit, timestamp: Long?): PendingIntent {
+        return getBroadcast(
             context,
             2,
             Intent(context, WidgetReceiver::class.java).apply {
@@ -145,6 +148,7 @@ class PendingIntentFactory
             },
             FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT
         )
+    }
 
     fun updateWidgets(): PendingIntent =
         getBroadcast(

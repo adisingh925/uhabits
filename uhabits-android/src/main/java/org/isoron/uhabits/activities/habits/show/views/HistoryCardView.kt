@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import org.isoron.platform.gui.toInt
 import org.isoron.platform.time.JavaLocalDateFormatter
+import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.ui.screens.habits.show.views.HistoryCardPresenter
 import org.isoron.uhabits.core.ui.screens.habits.show.views.HistoryCardState
 import org.isoron.uhabits.core.ui.views.HistoryChart
@@ -35,7 +36,8 @@ class HistoryCardView(context: Context, attrs: AttributeSet) : LinearLayout(cont
     private var binding = ShowHabitHistoryBinding.inflate(LayoutInflater.from(context), this)
 
     fun setState(state: HistoryCardState) {
-        val androidColor = state.theme.color(state.color).toInt()
+        val androidColor = state.theme.color(state.color[0]).toInt()
+//        val androidColor = state.theme.color(PaletteColor((0))).toInt()
         binding.title.setTextColor(androidColor)
         binding.chart.view = HistoryChart(
             today = state.today,

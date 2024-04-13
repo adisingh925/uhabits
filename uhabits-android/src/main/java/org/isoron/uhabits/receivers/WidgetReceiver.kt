@@ -22,11 +22,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat
 import dagger.Component
 import org.isoron.uhabits.HabitsApplication
 import org.isoron.uhabits.core.ui.widgets.WidgetBehavior
 import org.isoron.uhabits.inject.HabitsApplicationComponent
 import org.isoron.uhabits.intents.IntentParser.CheckmarkIntentData
+import org.isoron.uhabits.preferences.SharedPreferencesStorage
+import org.isoron.uhabits.widgets.activities.HabitPickerDialog
 
 /**
  * The Android BroadcastReceiver for Loop Habit Tracker.
@@ -36,6 +39,7 @@ import org.isoron.uhabits.intents.IntentParser.CheckmarkIntentData
  */
 class WidgetReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("huahua", "onReceive")
         val app = context.applicationContext as HabitsApplication
         val component = DaggerWidgetReceiver_WidgetComponent
             .builder()
@@ -49,6 +53,7 @@ class WidgetReceiver : BroadcastReceiver() {
         lastReceivedIntent = intent
         try {
             var data: CheckmarkIntentData? = null
+
             if (intent.action !== ACTION_UPDATE_WIDGETS_VALUE) {
                 data = parser.parseCheckmarkIntent(intent)
             }
@@ -67,7 +72,9 @@ class WidgetReceiver : BroadcastReceiver() {
                         data.timestamp
                     )
                 }
+
                 ACTION_TOGGLE_REPETITION -> {
+                    Log.d("pong", "onReceive")
                     Log.d(
                         TAG,
                         String.format(
@@ -76,11 +83,150 @@ class WidgetReceiver : BroadcastReceiver() {
                             data.timestamp.unixTime
                         )
                     )
-                    controller.onToggleRepetition(
-                        data.habit,
-                        data.timestamp
-                    )
+
+                    if(SharedPreferencesStorage(context).getInt("currentvalue", 0) == 0){
+                        if (data.habit.originalEntries.get(data.timestamp).value == 0) {
+                            val intent = Intent(context, HabitPickerDialog::class.java)
+                            intent.putExtra("type", "special")
+                            intent.putExtra("id", data.habit.id)
+                            intent.putExtra("timestamp", data.timestamp.unixTime)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            ContextCompat.startActivity(context, intent, null)
+                        }
+                    }
+
+                    if (SharedPreferencesStorage(context).getInt("currentvalue", 0) == 5) {
+                        if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 5
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+                        } else {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                5
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 5
+                        }
+                        SharedPreferencesStorage(context).putInt("currentvalue", 0)
+
+                        controller.onToggleRepetition(
+                            data.habit,
+                            data.timestamp
+                        )
+
+                    } else if (SharedPreferencesStorage(context).getInt("currentvalue", 0) == 4) {
+                        if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 4
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+                        } else {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                4
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 4
+                        }
+                        SharedPreferencesStorage(context).putInt("currentvalue", 0)
+
+                        controller.onToggleRepetition(
+                            data.habit,
+                            data.timestamp
+                        )
+
+                    } else if (SharedPreferencesStorage(context).getInt("currentvalue", 0) == 2) {
+                        if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 2
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+                        } else {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                2
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 0
+                        }
+                        SharedPreferencesStorage(context).putInt("currentvalue", 0)
+
+                        controller.onToggleRepetition(
+                            data.habit,
+                            data.timestamp
+                        )
+                    } else {
+                        Log.d("currentvalue", "zero")
+                        if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 4
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+
+                            controller.onToggleRepetition(
+                                data.habit,
+                                data.timestamp
+                            )
+                        } else if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 5
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+
+                            controller.onToggleRepetition(
+                                data.habit,
+                                data.timestamp
+                            )
+                        } else if (SharedPreferencesStorage(context).getInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            ) == 2
+                        ) {
+                            SharedPreferencesStorage(context).putInt(
+                                data.timestamp.unixTime.toString(),
+                                0
+                            )
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+
+                            controller.onToggleRepetition(
+                                data.habit,
+                                data.timestamp
+                            )
+                        }else{
+                            data.habit.originalEntries.get(data.timestamp).value = 2
+
+                            controller.onToggleRepetition(
+                                data.habit,
+                                data.timestamp
+                            )
+                        }
+                    }
                 }
+
                 ACTION_REMOVE_REPETITION -> {
                     Log.d(
                         TAG,
@@ -95,6 +241,7 @@ class WidgetReceiver : BroadcastReceiver() {
                         data.timestamp
                     )
                 }
+
                 ACTION_UPDATE_WIDGETS_VALUE -> {
                     widgetUpdater.updateWidgets()
                     widgetUpdater.scheduleStartDayWidgetUpdate()

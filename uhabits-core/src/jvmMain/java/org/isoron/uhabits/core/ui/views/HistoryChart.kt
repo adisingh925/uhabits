@@ -40,7 +40,7 @@ interface OnDateClickedListener {
 class HistoryChart(
     var dateFormatter: LocalDateFormatter,
     var firstWeekday: DayOfWeek,
-    var paletteColor: PaletteColor,
+    var paletteColor: List<PaletteColor>,
     var series: List<Square>,
     var defaultSquare: Square,
     var notesIndicators: List<Boolean>,
@@ -55,7 +55,10 @@ class HistoryChart(
         OFF,
         GREY,
         DIMMED,
-        HATCHED
+        HATCHED,
+        RED,
+        BLUE,
+        GREEN
     }
 
     var squareSpacing = 1.0
@@ -204,11 +207,34 @@ class HistoryChart(
         date: LocalDate,
         offset: Int
     ) {
+
         val value = if (offset >= series.size) defaultSquare else series[offset]
         val hasNotes = if (offset >= notesIndicators.size) false else notesIndicators[offset]
         val squareColor: Color
         val circleColor: Color
-        val color = theme.color(paletteColor.paletteIndex)
+        var color = theme.color(paletteColor[offset % paletteColor.size])
+
+        when(value){
+            Square.RED -> color = theme.color(paletteColor[0])
+            Square.BLUE -> color = theme.color(paletteColor[1])
+            Square.GREEN -> color = theme.color(paletteColor[2])
+            Square.ON -> {
+
+            }
+            Square.OFF -> {
+
+            }
+            Square.GREY -> {
+
+            }
+            Square.DIMMED -> {
+
+            }
+            Square.HATCHED -> {
+
+            }
+        }
+
         squareColor = when (value) {
             Square.ON -> {
                 color
@@ -222,6 +248,12 @@ class HistoryChart(
             Square.DIMMED, Square.HATCHED -> {
                 color.blendWith(theme.cardBackgroundColor, 0.5)
             }
+
+            Square.RED -> {
+                theme.color(paletteColor[0])
+            }
+            Square.BLUE -> theme.color(paletteColor[1])
+            Square.GREEN -> theme.color(paletteColor[2])
         }
 
         canvas.setColor(squareColor)

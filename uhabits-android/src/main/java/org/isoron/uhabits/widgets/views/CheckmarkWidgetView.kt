@@ -19,10 +19,13 @@
 package org.isoron.uhabits.widgets.views
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import org.isoron.uhabits.HabitsApplication
 import org.isoron.uhabits.R
 import org.isoron.uhabits.activities.common.views.RingView
@@ -32,11 +35,14 @@ import org.isoron.uhabits.core.models.Entry.Companion.SKIP
 import org.isoron.uhabits.core.models.Entry.Companion.UNKNOWN
 import org.isoron.uhabits.core.models.Entry.Companion.YES_AUTO
 import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_1
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_2
 import org.isoron.uhabits.core.preferences.Preferences
 import org.isoron.uhabits.inject.HabitsApplicationComponent
 import org.isoron.uhabits.utils.InterfaceUtils.getDimension
 import org.isoron.uhabits.utils.PaletteUtils.getAndroidTestColor
 import org.isoron.uhabits.utils.StyledResources
+import org.isoron.uhabits.widgets.activities.HabitPickerDialog
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -68,7 +74,7 @@ class CheckmarkWidgetView : HabitWidgetView {
         val fgColor: Int
         setShadowAlpha(0x4f)
         when (entryState) {
-            YES_MANUAL, SKIP, YES_AUTO -> {
+            YES_MANUAL, YES_MANUAL_1, YES_MANUAL_2, SKIP, YES_AUTO -> {
                 bgColor = activeColor
                 fgColor = res.getColor(R.attr.contrast0)
                 backgroundPaint!!.color = bgColor
@@ -83,6 +89,11 @@ class CheckmarkWidgetView : HabitWidgetView {
                 fgColor = res.getColor(R.attr.contrast60)
             }
         }
+
+        if(bgColor != activeColor){
+            Log.d("CheckmarkWidgetView", "bgColor != activeColor")
+        }
+
         ring.setPercentage(percentage)
         ring.setColor(fgColor)
         ring.setBackgroundColor(bgColor)
@@ -109,7 +120,7 @@ class CheckmarkWidgetView : HabitWidgetView {
             (max(0, entryValue) / 1000.0).toShortString()
         } else {
             when (entryState) {
-                YES_MANUAL, YES_AUTO -> resources.getString(R.string.fa_check)
+                YES_MANUAL,YES_MANUAL_1, YES_MANUAL_2, YES_AUTO -> resources.getString(R.string.fa_check)
                 SKIP -> resources.getString(R.string.fa_skipped)
                 UNKNOWN -> {
                     run {

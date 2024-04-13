@@ -23,6 +23,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import dagger.Lazy
 import nl.dionsegijn.konfetti.core.Party
@@ -277,6 +278,7 @@ class ListHabitsScreen
         color: PaletteColor,
         callback: ListHabitsBehavior.CheckMarkDialogCallback
     ) {
+        Log.d("ListHabitsScreen", "showCheckmarkPopup")
         val theme = rootView.get().currentTheme()
         val fm = (context as AppCompatActivity).supportFragmentManager
         val dialog = CheckmarkDialog()

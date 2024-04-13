@@ -25,6 +25,7 @@ import android.view.View
 import org.isoron.platform.gui.AndroidDataView
 import org.isoron.platform.time.JavaLocalDateFormatter
 import org.isoron.uhabits.core.models.Habit
+import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.ui.screens.habits.show.views.HistoryCardPresenter
 import org.isoron.uhabits.core.ui.views.HistoryChart
 import org.isoron.uhabits.core.ui.views.WidgetTheme
@@ -55,6 +56,7 @@ class HistoryWidget(
             firstWeekday = prefs.firstWeekday,
             theme = WidgetTheme()
         )
+
         (widgetView.dataView as AndroidDataView).apply {
             val historyChart = (this.view as HistoryChart)
             historyChart.series = model.series
@@ -69,7 +71,7 @@ class HistoryWidget(
             AndroidDataView(context).apply {
                 view = HistoryChart(
                     today = DateUtils.getTodayWithOffset().toLocalDate(),
-                    paletteColor = habit.color,
+                    paletteColor = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
                     theme = WidgetTheme(),
                     dateFormatter = JavaLocalDateFormatter(Locale.getDefault()),
                     firstWeekday = prefs.firstWeekday,

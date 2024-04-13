@@ -31,6 +31,8 @@ import org.isoron.uhabits.core.models.Entry.Companion.NO
 import org.isoron.uhabits.core.models.Entry.Companion.SKIP
 import org.isoron.uhabits.core.models.Entry.Companion.UNKNOWN
 import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_1
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_2
 import org.isoron.uhabits.databinding.CheckmarkPopupBinding
 import org.isoron.uhabits.utils.InterfaceUtils.getFontAwesome
 import org.isoron.uhabits.utils.getCenter
@@ -43,14 +45,17 @@ class CheckmarkDialog : AppCompatDialogFragment() {
         val appComponent = (requireActivity().application as HabitsApplication).component
         val prefs = appComponent.preferences
         val view = CheckmarkPopupBinding.inflate(LayoutInflater.from(context))
-        val color = requireArguments().getInt("color")
-        arrayOf(view.yesBtn, view.skipBtn).forEach {
-            it.setTextColor(color)
-        }
+//        val color = requireArguments().getInt("color")
+//        arrayOf(view.yesBtn, view.skipBtn).forEach {
+//            it.setTextColor(color)
+//        }
+        view.redButton.setTextColor(requireActivity().resources.getColor(R.color.red_700))
+        view.blueButton.setTextColor(requireActivity().resources.getColor(R.color.blue_700))
+        view.greenButton.setTextColor(requireActivity().resources.getColor(R.color.green_700))
         arrayOf(view.noBtn, view.unknownBtn).forEach {
             it.setTextColor(view.root.sres.getColor(R.attr.contrast60))
         }
-        arrayOf(view.yesBtn, view.noBtn, view.skipBtn, view.unknownBtn).forEach {
+        arrayOf(view.redButton, view.greenButton, view.blueButton, view.noBtn, view.skipBtn, view.unknownBtn).forEach {
             it.typeface = getFontAwesome(requireContext())
         }
         view.notes.setText(requireArguments().getString("notes")!!)
@@ -64,11 +69,13 @@ class CheckmarkDialog : AppCompatDialogFragment() {
         }
         fun onClick(v: Int) {
             val notes = view.notes.text.toString().trim()
-            val location = view.yesBtn.getCenter()
+            val location = view.redButton.getCenter()
             onToggle(v, notes, location.x, location.y)
             requireDialog().dismiss()
         }
-        view.yesBtn.setOnClickListener { onClick(YES_MANUAL) }
+        view.redButton.setOnClickListener { onClick(YES_MANUAL) }
+        view.greenButton.setOnClickListener { onClick(YES_MANUAL_1) }
+        view.blueButton.setOnClickListener { onClick(YES_MANUAL_2) }
         view.noBtn.setOnClickListener { onClick(NO) }
         view.skipBtn.setOnClickListener { onClick(SKIP) }
         view.unknownBtn.setOnClickListener { onClick(UNKNOWN) }

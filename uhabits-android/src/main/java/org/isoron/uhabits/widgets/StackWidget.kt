@@ -24,6 +24,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import org.isoron.platform.utils.StringUtils
@@ -51,9 +52,9 @@ class StackWidget(
     }
 
     override fun getRemoteViews(width: Int, height: Int): RemoteViews {
+        Log.d("StackWidget", "getRemoteViews: $width x $height")
         val manager = AppWidgetManager.getInstance(context)
-        val remoteViews =
-            RemoteViews(context.packageName, StackWidgetType.getStackWidgetLayoutId(widgetType))
+        val remoteViews = RemoteViews(context.packageName, StackWidgetType.getStackWidgetLayoutId(widgetType))
         val serviceIntent = Intent(context, StackWidgetService::class.java)
         val habitIds = StringUtils.joinLongs(habits.map { it.id!! }.toLongArray())
 

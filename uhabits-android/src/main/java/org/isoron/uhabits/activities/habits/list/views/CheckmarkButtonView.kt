@@ -35,6 +35,9 @@ import org.isoron.uhabits.core.models.Entry.Companion.SKIP
 import org.isoron.uhabits.core.models.Entry.Companion.UNKNOWN
 import org.isoron.uhabits.core.models.Entry.Companion.YES_AUTO
 import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_1
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_2
+import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.preferences.Preferences
 import org.isoron.uhabits.inject.ActivityContext
 import org.isoron.uhabits.utils.drawNotesIndicator
@@ -144,7 +147,10 @@ class CheckmarkButtonView(
 
         fun draw(canvas: Canvas) {
             paint.color = when (value) {
-                YES_MANUAL, YES_AUTO, SKIP -> color
+                YES_MANUAL_1 -> Color.parseColor("#388E3C")
+                YES_MANUAL_2 -> Color.parseColor("#1976D2")
+                YES_MANUAL -> Color.parseColor("#D32F2F")
+                YES_AUTO, SKIP -> color
                 NO -> {
                     if (preferences.areQuestionMarksEnabled) {
                         mediumContrastColor

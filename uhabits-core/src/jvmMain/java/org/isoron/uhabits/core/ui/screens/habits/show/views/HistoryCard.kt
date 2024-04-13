@@ -27,6 +27,8 @@ import org.isoron.uhabits.core.models.Entry
 import org.isoron.uhabits.core.models.Entry.Companion.SKIP
 import org.isoron.uhabits.core.models.Entry.Companion.YES_AUTO
 import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_1
+import org.isoron.uhabits.core.models.Entry.Companion.YES_MANUAL_2
 import org.isoron.uhabits.core.models.Habit
 import org.isoron.uhabits.core.models.HabitList
 import org.isoron.uhabits.core.models.NumericalHabitType.AT_LEAST
@@ -47,7 +49,7 @@ import org.isoron.uhabits.core.utils.DateUtils
 import kotlin.math.roundToInt
 
 data class HistoryCardState(
-    val color: PaletteColor,
+    val color: List<PaletteColor>,
     val firstWeekday: DayOfWeek,
     val series: List<HistoryChart.Square>,
     val defaultSquare: HistoryChart.Square,
@@ -159,6 +161,7 @@ class HistoryCardPresenter(
             firstWeekday: DayOfWeek,
             theme: Theme
         ): HistoryCardState {
+            println("HistoryCardPresenter.buildState")
             val today = DateUtils.getTodayWithOffset()
             val oldest = habit.computedEntries.getKnown().lastOrNull()?.timestamp ?: today
             val entries = habit.computedEntries.getByInterval(oldest, today)
@@ -175,7 +178,9 @@ class HistoryCardPresenter(
             } else {
                 entries.map {
                     when (it.value) {
-                        YES_MANUAL -> ON
+                        YES_MANUAL -> HistoryChart.Square.RED
+                        YES_MANUAL_1 -> HistoryChart.Square.BLUE
+                        YES_MANUAL_2 -> HistoryChart.Square.GREEN
                         YES_AUTO -> DIMMED
                         SKIP -> HATCHED
                         else -> OFF
@@ -189,8 +194,19 @@ class HistoryCardPresenter(
                 }
             }
 
+            val color = entries.map {
+                when(it.value) {
+                    YES_MANUAL -> PaletteColor(0)
+                    YES_MANUAL_1 -> PaletteColor(1)
+                    YES_MANUAL_2 -> PaletteColor(2)
+                    else -> PaletteColor(2)
+                }
+            }
+
+            println("HistoryCardPresenter.buildState: color = $color")
+
             return HistoryCardState(
-                color = habit.color,
+                color = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
                 firstWeekday = firstWeekday,
                 today = today.toLocalDate(),
                 theme = theme,

@@ -53,7 +53,17 @@
         app:showDividers="middle">
 
         <TextView
-            android:id="@+id/yesBtn"
+            android:id="@+id/redButton"
+            style="@style/CheckmarkPopupBtn"
+            android:text="@string/fa_check" />
+
+        <TextView
+            android:id="@+id/greenButton"
+            style="@style/CheckmarkPopupBtn"
+            android:text="@string/fa_check" />
+
+        <TextView
+            android:id="@+id/blueButton"
             style="@style/CheckmarkPopupBtn"
             android:text="@string/fa_check" />
 

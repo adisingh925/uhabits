@@ -19,7 +19,7 @@
 
 plugins {
     id("com.github.triplet.play") version "3.8.6"
-    id("com.android.application") version "8.1.4"
+    id("com.android.application") version "8.3.1"
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("org.jlleitschuh.gradle.ktlint")
@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         versionCode = 20200
-        versionName = "2.2.0"
+        versionName = "2.2.1"
         minSdk = 28
         targetSdk = 34
         applicationId = "org.isoron.uhabits"
@@ -100,6 +100,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     val daggerVersion = "2.51.1"
     val kotlinVersion = "1.9.22"
     val kxCoroutinesVersion = "1.7.3"

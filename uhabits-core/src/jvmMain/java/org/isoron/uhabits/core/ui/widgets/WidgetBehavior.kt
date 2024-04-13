@@ -49,6 +49,7 @@ class WidgetBehavior @Inject constructor(
 
     fun onToggleRepetition(habit: Habit, timestamp: Timestamp) {
         val entry = habit.originalEntries.get(timestamp)
+        println("entry: $entry")
         val currentValue = entry.value
         val newValue = nextToggleValue(
             value = currentValue,

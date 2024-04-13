@@ -21,12 +21,17 @@ package org.isoron.uhabits.widgets
 
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import org.isoron.platform.gui.toInt
 import org.isoron.uhabits.core.models.Entry
 import org.isoron.uhabits.core.models.Habit
+import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.ui.views.WidgetTheme
 import org.isoron.uhabits.core.utils.DateUtils
+import org.isoron.uhabits.widgets.activities.HabitPickerDialog
 import org.isoron.uhabits.widgets.views.CheckmarkWidgetView
 
 open class CheckmarkWidget(
@@ -51,7 +56,30 @@ open class CheckmarkWidget(
         (widgetView as CheckmarkWidgetView).apply {
             val today = DateUtils.getTodayWithOffset()
             setBackgroundAlpha(preferedBackgroundAlpha)
-            activeColor = WidgetTheme().color(habit.color).toInt()
+            Log.d("CheckmarkWidget", "refreshData: ${habit.name} ${habit.originalEntries.get(today).value}")
+            when(habit.originalEntries.get(today).value) {
+                Entry.YES_MANUAL -> {
+                    activeColor = WidgetTheme().color(PaletteColor(0)).toInt()
+                }
+                Entry.YES_MANUAL_1 -> {
+                    activeColor = WidgetTheme().color(PaletteColor(1)).toInt()
+                }
+                Entry.YES_MANUAL_2 -> {
+                    activeColor = WidgetTheme().color(PaletteColor(2)).toInt()
+                }
+                Entry.NO -> {
+
+                }
+                Entry.SKIP -> {
+
+                }
+                Entry.UNKNOWN -> {
+
+                }
+                else ->{
+                    activeColor = WidgetTheme().color(habit.color).toInt()
+                }
+            }
             name = habit.name
             entryValue = habit.computedEntries.get(today).value
             if (habit.isNumerical) {
