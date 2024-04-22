@@ -71,7 +71,7 @@ class HistoryWidget(
             AndroidDataView(context).apply {
                 view = HistoryChart(
                     today = DateUtils.getTodayWithOffset().toLocalDate(),
-                    paletteColor = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
+                    paletteColor = listOf(PaletteColor(0), PaletteColor(11), PaletteColor(7)),
                     theme = WidgetTheme(),
                     dateFormatter = JavaLocalDateFormatter(Locale.getDefault()),
                     firstWeekday = prefs.firstWeekday,

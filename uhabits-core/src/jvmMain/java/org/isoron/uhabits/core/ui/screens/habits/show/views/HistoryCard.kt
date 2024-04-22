@@ -197,16 +197,16 @@ class HistoryCardPresenter(
             val color = entries.map {
                 when(it.value) {
                     YES_MANUAL -> PaletteColor(0)
-                    YES_MANUAL_1 -> PaletteColor(1)
-                    YES_MANUAL_2 -> PaletteColor(2)
-                    else -> PaletteColor(2)
+                    YES_MANUAL_1 -> PaletteColor(11)
+                    YES_MANUAL_2 -> PaletteColor(7)
+                    else -> PaletteColor(0)
                 }
             }
 
             println("HistoryCardPresenter.buildState: color = $color")
 
             return HistoryCardState(
-                color = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
+                color = listOf(PaletteColor(0), PaletteColor(11), PaletteColor(7)),
                 firstWeekday = firstWeekday,
                 today = today.toLocalDate(),
                 theme = theme,

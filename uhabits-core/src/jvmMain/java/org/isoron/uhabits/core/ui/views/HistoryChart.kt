@@ -216,8 +216,8 @@ class HistoryChart(
 
         when(value){
             Square.RED -> color = theme.color(paletteColor[0])
-            Square.BLUE -> color = theme.color(paletteColor[1])
-            Square.GREEN -> color = theme.color(paletteColor[2])
+            Square.BLUE -> color = theme.color(paletteColor[2])
+            Square.GREEN -> color = theme.color(paletteColor[1])
             Square.ON -> {
 
             }
@@ -252,8 +252,8 @@ class HistoryChart(
             Square.RED -> {
                 theme.color(paletteColor[0])
             }
-            Square.BLUE -> theme.color(paletteColor[1])
-            Square.GREEN -> theme.color(paletteColor[2])
+            Square.BLUE -> theme.color(paletteColor[2])
+            Square.GREEN -> theme.color(paletteColor[1])
         }
 
         canvas.setColor(squareColor)

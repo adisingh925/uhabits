@@ -45,10 +45,6 @@ class CheckmarkDialog : AppCompatDialogFragment() {
         val appComponent = (requireActivity().application as HabitsApplication).component
         val prefs = appComponent.preferences
         val view = CheckmarkPopupBinding.inflate(LayoutInflater.from(context))
-//        val color = requireArguments().getInt("color")
-//        arrayOf(view.yesBtn, view.skipBtn).forEach {
-//            it.setTextColor(color)
-//        }
         view.redButton.setTextColor(requireActivity().resources.getColor(R.color.red_700))
         view.blueButton.setTextColor(requireActivity().resources.getColor(R.color.blue_700))
         view.greenButton.setTextColor(requireActivity().resources.getColor(R.color.green_700))

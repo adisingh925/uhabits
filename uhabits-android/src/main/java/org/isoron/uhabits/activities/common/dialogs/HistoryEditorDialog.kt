@@ -63,7 +63,7 @@ class HistoryEditorDialog : AppCompatDialogFragment(), CommandRunner.Listener {
         chart = HistoryChart(
             dateFormatter = JavaLocalDateFormatter(Locale.getDefault()),
             firstWeekday = preferences.firstWeekday,
-            paletteColor = listOf(PaletteColor(0), PaletteColor(1), PaletteColor(2)),
+            paletteColor = listOf(PaletteColor(0), PaletteColor(11), PaletteColor(7)),
             series = emptyList(),
             defaultSquare = HistoryChart.Square.OFF,
             notesIndicators = emptyList(),

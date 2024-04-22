@@ -25,7 +25,9 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import org.isoron.platform.gui.Color
 import org.isoron.platform.gui.toInt
+import org.isoron.uhabits.R
 import org.isoron.uhabits.core.models.Entry
 import org.isoron.uhabits.core.models.Habit
 import org.isoron.uhabits.core.models.PaletteColor
@@ -59,13 +61,13 @@ open class CheckmarkWidget(
             Log.d("CheckmarkWidget", "refreshData: ${habit.name} ${habit.originalEntries.get(today).value}")
             when(habit.originalEntries.get(today).value) {
                 Entry.YES_MANUAL -> {
-                    activeColor = WidgetTheme().color(PaletteColor(0)).toInt()
+                    activeColor = ContextCompat.getColor(context, R.color.red_700)
                 }
                 Entry.YES_MANUAL_1 -> {
-                    activeColor = WidgetTheme().color(PaletteColor(1)).toInt()
+                    activeColor = ContextCompat.getColor(context, R.color.green_700)
                 }
                 Entry.YES_MANUAL_2 -> {
-                    activeColor = WidgetTheme().color(PaletteColor(2)).toInt()
+                    activeColor = ContextCompat.getColor(context, R.color.blue_700)
                 }
                 Entry.NO -> {
 
